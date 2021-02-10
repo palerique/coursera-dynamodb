@@ -118,6 +118,14 @@ We can then run queries against that index using the newly defined partition and
 There are two types of indexes we will go over in depth. The first is called a local secondary index. 
 This allows you to pick an alternate sort key. The second is called a global secondary index, 
 and this allows you to create an alternate partition and sort key.
+
+- ############### CRIAR BACKUP(ON-DEMAND BACKUP) DE UMA TABELA E RESTAURA-LO
+
+aws dynamodb create-backup --table-name Music --backup-name MusicBackup
+aws dynamodb describe-backup --backup-arn arn:aws:dynamodb:us-east-2:848577315427:table/Music/backup/01612988844270-f84c6d96
+aws dynamodb restore-table-from-backup --target-table-name MusicRestored --backup-arn arn:aws:dynamodb:us-east-2:848577315427:table/Music/backup/01612988844270-f84c6d96
+aws dynamodb describe-table --table-name MusicRestored
+aws dynamodb scan --table-name MusicRestored
 ---------------
 
 AWS SDK (AWS SDK for JavaScript)

@@ -1,0 +1,155 @@
+------------------------------------------------------------------------------------------------------------------------------
+DYNAMODB DYNAMODBB
+
+AWS console:
+https://aws.amazon.com/pt/console/
+
+Cloud9 console:
+https://console.aws.amazon.com/cloud9/
+
+Link curso Coursera:
+https://www.coursera.org/learn/dynamodb-nosql-database-driven-apps?
+
+COMANDOS AWS CLI
+Comandos do terminal(executar usando terminal do Cloud9):
+---------------
+- ############### DOC:
+
+https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/Tools.CLI.html
+
+- ############### LISTAR TABELAS:
+
+aws dynamodb list-tables
+
+- ############### IMPORTAR DADOS PARA TABELA:
+
+aws dynamodb put-item --table-name Music --item file://song1.json
+aws dynamodb put-item --table-name Music --item file://song2.json
+aws dynamodb put-item --table-name Music --item file://song3.json
+
+song1.json:
+{
+    "Artist": {"S": "David Bowie"},
+    "SongTitle": {"S": "Changes"},
+    "AlbumTitle": {"S": "Hunky Dory"},
+    "Genre": {"S": "Rock"}
+}
+
+song2.json:
+{
+    "Artist": {"S": "David Bowie"},
+    "SongTitle": {"S": "Heroes"},
+    "AlbumTitle": {"S": "Heroes"}
+}
+
+song3.json:
+{
+    "Artist": {"S": "Bryan Adams"},
+    "SongTitle": {"S": "Cloud Number Nine"},
+    "AlbumTitle": {"S": "On A Day Like Today"},
+    "Released": {"S": "1998"}
+}
+
+doc: https://docs.aws.amazon.com/cli/latest/reference/dynamodb/put-item.html
+
+- ############### FAZER CONSULTA NO BD:
+
+(pela partition-key, que é chave primária)
+aws dynamodb query --table-name Music --key-condition-expression "Artist = :v1" --expression-attribute-values file://values1.json
+(pela partition-key e sort-key)
+aws dynamodb query --table-name Music --key-condition-expression "Artist = :v1 AND SongTitle = :v2" --expression-attribute-values file://values2.json
+
+values1.json:
+{
+	":v1": {"S": "David Bowie"}
+}
+
+values2.json:
+{
+	":v1": {"S": "David Bowie"},
+	":v2": {"S": "Heroes"}
+}
+
+- ############### DELETAR DO BANCO
+
+aws dynamodb delete-item --table-name Music --key file://keysToDelete.json
+
+keysToDelete.json:
+{
+	"Artist": {"S": "David Bowie"},
+	"SongTitle": {"S": "Changes"}
+}
+
+- ############### FAZER SCAN (TIPO UM SELECT * QUE TRAZ TUDO)
+
+aws dynamodb scan --table-name Music
+
+- ############### FILTER RESULT (FILTER EXPRESSIONS)
+
+aws dynamodb query --table-name Music --key-condition-expression "Artist = :v1" --filter-expression "Released = :v2" --expression-attribute-values file://filterValues1.json
+aws dynamodb scan --table-name Music --filter-expression "Released = :v1" --expression-attribute-values file://filterValues1.1.json
+aws dynamodb scan --table-name Music --filter-expression "SongTitle = :v1" --expression-attribute-values file://filterValues2.json
+
+filterValues1.json:
+{
+	":v1": {"S": "Bryan Adams"},
+	":v2": {"S": "1998"}
+}
+
+filterValues1.1.json:
+{
+	":v1": {"S": "1998"}
+}
+
+filterValues2.json:
+{
+	":v1": {"S": "Heroes"}
+}
+
+OBS: We can use filters with scans in a similar fashion. Keep in mind though, when we're working with scans, they will go through every item in the table 
+and apply the filter after the scan has completed. So, a filter will not help you make scans less expensive or more efficient.
+
+- ############### SECONDARY INDEX
+
+A secondary index essentially allows you to create a copy of your table with an alternate key schema, 
+making other attributes suddenly queryable. You can do this easily by calling an API to create the secondary index for you, 
+and this index is kept in sync with the base table asynchronously.
+We can then run queries against that index using the newly defined partition and sort keys. 
+There are two types of indexes we will go over in depth. The first is called a local secondary index. 
+This allows you to pick an alternate sort key. The second is called a global secondary index, 
+and this allows you to create an alternate partition and sort key.
+---------------
+
+AWS SDK (AWS SDK for JavaScript)
+---------------
+- INSTALAR AWS-SDK
+npm install aws-sdk
+
+- RODAR O SCRIPT PARA CRIAÇÃO DE TABELA
+node create_table.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab1/solution/create_table.js
+Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#createTable-property
+
+- INSERT NA TABELA
+node upload_items.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/solution/upload_items.js
+Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property
+
+- UPLOAD SITE PARA O BUCKET DO S3
+pushd /home/ec2-user/environment/lab2/resources && node upload_website.js && popd
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/resources/upload_website.js
+
+- SCAN TABLE
+node scan_dragons.js test
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/solution/scan_dragons.js
+Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
+
+- UPLOAD CONFIG PARA O BUCKET DO S3
+pushd /home/ec2-user/environment/lab2/resources && node upload_config.js && popd
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/resources/upload_config.js
+
+- LINK DO SITE NO S3:
+http://er-101-2021-02-10-dragon-website.s3-website.us-east-2.amazonaws.com/
+---------------
+
+------------------------------------------------------------------------------------------------------------------------------

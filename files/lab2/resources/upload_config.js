@@ -33,7 +33,7 @@ var
         region: "us-east-1"
     }),
     FS = require("fs"),
-    bucket_name_str = "<FMI>";
+    bucket_name_str = "er-101-2021-02-10-dragon-website";
 
 
 function uploadItemAsBinary(key_name_str, content_type_str, bin){

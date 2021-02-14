@@ -84,6 +84,10 @@ keysToDelete.json:
 
 aws dynamodb scan --table-name Music
 
+- ############### LIMITAR NÚMERO DE ITEMS RETORNADOS NO SCAN
+
+aws dynamodb scan --table-name Music --max-items 3
+
 - ############### FILTER RESULT (FILTER EXPRESSIONS)
 
 aws dynamodb query --table-name Music --key-condition-expression "Artist = :v1" --filter-expression "Released = :v2" --expression-attribute-values file://filterValues1.json
@@ -126,6 +130,102 @@ aws dynamodb describe-backup --backup-arn arn:aws:dynamodb:us-east-2:84857731542
 aws dynamodb restore-table-from-backup --target-table-name MusicRestored --backup-arn arn:aws:dynamodb:us-east-2:848577315427:table/Music/backup/01612988844270-f84c6d96
 aws dynamodb describe-table --table-name MusicRestored
 aws dynamodb scan --table-name MusicRestored
+
+- ############### BATCH WRITE ITEM
+
+aws dynamodb batch-write-item --request-items file://batchJSON/inputWrite.json
+Funcionou somente da forma abaixo com outra estrutura de json:
+aws dynamodb batch-write-item --request-items file://batchJSON/inputWrite.json
+
+batchJSON/inputWrite.json:
+{
+	"Music": [
+		{
+			"PutRequest": {
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Do It Again"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"}
+				},
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Dirty Work"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"},
+					"Note": {"S": "Great Song!"}
+				},
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Turn That Heartbeat Over Again"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"}
+				}
+			}
+		}
+	]
+}
+
+batchJSON/inputWrite_2.json:
+{
+	"Music": [
+		{
+			"PutRequest": {
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Do It Again"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"}
+				}
+			}
+		},
+		{
+			"PutRequest": {
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Dirty Work"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"},
+					"Note": {"S": "Great Song!"}
+				}
+			}
+		},
+		{
+			"PutRequest": {
+				"Item": {
+					"Artist": {"S": "Steely Dan"},
+					"SongTitle": {"S": "Turn That Heartbeat Over Again"},
+					"AlbumTitle": {"S": "Can't Buy a Thrill"},
+					"Released": {"N": "1972"}
+				}
+			}
+		}
+	]
+}
+
+DOC: https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/SampleData.LoadData.html
+
+- ############### BATCH GET ITEM
+
+aws dynamodb batch-get-item --request-items file://batchJSON/inputGet.json
+
+batchJSON/inputGet.json
+{
+	"Music": {
+		"Keys": [
+			{
+				"Artist": {"S": "Bryan Adams"},
+				"SongTitle": {"S": "Teste1"}
+			},
+			{
+				"Artist": {"S": "Steely Dan"},
+				"SongTitle": {"S": "Do It Again"}
+			}
+		]
+	}
+}
+
+DOC: https://docs.aws.amazon.com/cli/latest/reference/dynamodb/batch-get-item.html
 ---------------
 
 AWS SDK (AWS SDK for JavaScript)

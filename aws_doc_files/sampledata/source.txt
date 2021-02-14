@@ -1,0 +1,1 @@
+Files from: https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/SampleData.LoadData.html

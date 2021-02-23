@@ -226,6 +226,10 @@ batchJSON/inputGet.json
 }
 
 DOC: https://docs.aws.amazon.com/cli/latest/reference/dynamodb/batch-get-item.html
+
+- ############### DELETE TABLE
+
+aws dynamodb delete-table --table-name dragons
 ---------------
 
 AWS SDK (AWS SDK for JavaScript)
@@ -256,8 +260,25 @@ Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-
 pushd /home/ec2-user/environment/lab2/resources && node upload_config.js && popd
 Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/resources/upload_config.js
 
+EXERCISE 3
+
+- CREATE MULTIPLE TABLES
+node create_multiple_tables.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab3/solution/create_multiple_tables.js
+
+- POPULATE TABLES
+node seed_dragons.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab3/solution/seed_dragons.js
+
+- SCAN TABLE (DRAGONS)
+node scan_dragons.js test
+node scan_dragons.js test "Cassidiuma"
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab3/solution/scan_dragons.js
+Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
+
 - LINK DO SITE NO S3:
 http://er-101-2021-02-10-dragon-website.s3-website.us-east-2.amazonaws.com/
+http://er-101-2021-02-10-dragon-website.s3-website.us-east-2.amazonaws.com/index2.html
 ---------------
 
 ------------------------------------------------------------------------------------------------------------------------------

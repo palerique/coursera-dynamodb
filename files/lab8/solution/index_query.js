@@ -24,7 +24,7 @@ exports.handler = function (event, context, callback) {
 var
     AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
-        region: "us-east-1",
+        region: "us-east-2",
         apiVersion: "2012-08-10"
     });
 

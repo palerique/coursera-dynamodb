@@ -230,6 +230,66 @@ DOC: https://docs.aws.amazon.com/cli/latest/reference/dynamodb/batch-get-item.ht
 - ############### DELETE TABLE
 
 aws dynamodb delete-table --table-name dragons
+
+- ############### GET SOME HELP(SEE DOC)
+
+aws help
+aws <command> help
+aws <command> <subcommand> help
+
+Examples:
+aws dynamodb help
+aws dynamodb scan help
+
+############# EXERCISE 8 ###############
+
+!!! All these commands(present in the exercise pdf) don't work !!!
+aws dynamodb scan --index-name dragon_stats_index --table-name single_dragon_tables --filter family = "green"
+aws dynamodb scan --index-name dragon_stats_index --table-name single_dragon_tables --filter location_state = "arizona"
+aws dynamodb query --index-name location_index --table-name single_dragon_tables --keycondition location = starts_with("usa#arizona")
+aws dynamodb query --index-name location_index --table-name single_dragon_tables --keycondition location = starts_with("usa#nevada#las vegas#spring valley")
+
+- ############### TESTES
+
+QUERY INDEX USING KEY-CONDITIONS
+
+aws dynamodb query --index-name location_index --table-name improved_single_dragon_table --key-conditions '{
+    "sk":{
+	    "ComparisonOperator":"EQ",
+	    "AttributeValueList": [ {"S": "stats"} ]
+    }
+}'
+
+The same above, but in one-line style:
+aws dynamodb query --index-name location_index --table-name improved_single_dragon_table --key-conditions '{"sk":{"ComparisonOperator":"EQ","AttributeValueList": [ {"S": "stats"} ]}}'
+
+---
+		
+EQUIVALENT TO QUERY 2 BUT USING AWS CLI INSTEAD OF AWS SDK 
+
+aws dynamodb scan \
+    --table-name improved_single_dragon_table \
+	--index-name dragon_stats_index \
+	--expression-attribute-values '{
+        ":family": {"S": "green"}
+    }' \
+	--expression-attribute-names '{"#family": "family"}' \
+	--filter-expression '#family = :family' \
+	--projection-expression "dragon_name"
+
+---
+
+EQUIVALENT TO QUERY 4 BUT USING AWS CLI INSTEAD OF AWS SDK 
+ 
+aws dynamodb query \
+    --table-name improved_single_dragon_table \
+	--index-name location_index \
+	--expression-attribute-values '{
+        ":location": {"S": "usa#arizona"}, 
+        ":stats": {"S": "stats"}
+    }' \
+	--expression-attribute-names '{"#location": "location"}' \
+	--key-condition-expression 'sk = :stats and begins_with(#location, :location)'
 ---------------
 
 AWS SDK (AWS SDK for JavaScript)
@@ -275,6 +335,40 @@ node scan_dragons.js test
 node scan_dragons.js test "Cassidiuma"
 Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab3/solution/scan_dragons.js
 Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
+
+EXERCISE 8
+
+- CREATE A SIMPLE SINGLE TABLE
+node create_single_table_and_index.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/create_single_table_and_index.js
+
+- POPULATE THE SIMPLE SINGLE TABLE
+node seed_single_table.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/seed_single_table.js
+
+- CREATE A COMPLEX SINGLE TABLE
+node create_improved_single_table_and_all_indexes.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/create_improved_single_table_and_all_indexes.js
+
+- POPULATE THE COMPLEX SINGLE TABLE
+node seed_improved_table.js
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/seed_improved_table.js
+
+- QUERY THE COMPLEX SINGLE TABLE
+node query_1.js test "spews acid"
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/query_1.js
+
+- QUERY THE COMPLEX SINGLE TABLE
+node query_2.js test "green"
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/query_2.js
+
+- QUERY THE COMPLEX SINGLE TABLE
+node query_3.js test
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/query_3.js
+
+- QUERY THE COMPLEX SINGLE TABLE
+node query_4.js test "usa#arizona"
+Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab8/solution/query_4.js
 
 - LINK DO SITE NO S3:
 http://er-101-2021-02-10-dragon-website.s3-website.us-east-2.amazonaws.com/

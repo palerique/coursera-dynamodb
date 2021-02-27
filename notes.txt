@@ -264,6 +264,51 @@ The same above, but in one-line style:
 aws dynamodb query --index-name location_index --table-name improved_single_dragon_table --key-conditions '{"sk":{"ComparisonOperator":"EQ","AttributeValueList": [ {"S": "stats"} ]}}'
 
 ---
+
+EQUIVALENT TO QUERY 1 BUT USING AWS CLI INSTEAD OF AWS SDK 
+
+aws dynamodb query \
+    --table-name improved_single_dragon_table \
+	--index-name bonus_description_index \
+	--expression-attribute-values '{
+        ":bonus_description": {"S": "spews acid"}
+    }' \
+	--key-condition-expression 'bonus_description = :bonus_description' \
+	--projection-expression "pk"
+	
+aws dynamodb scan \
+    --table-name improved_single_dragon_table \
+    --index-name dragon_stats_index \
+    --filter-expression 'pk in (:uuid_0, :uuid_1, :uuid_2, :uuid_3, :uuid_4, :uuid_5, :uuid_6, :uuid_7, :uuid_8, :uuid_9, :uuid_10, :uuid_11, :uuid_12, :uuid_13, :uuid_14, :uuid_15, :uuid_16, :uuid_17, :uuid_18, :uuid_19, :uuid_20, :uuid_21, :uuid_22, :uuid_23)' \
+    --expression-attribute-values '{
+        ":uuid_0": {"S": "de52cfae-c380-43c6-a12d-c57ced4c8847" },
+        ":uuid_1": {"S": "be0bb70f-678d-4c21-babb-d089a22df25e" },
+        ":uuid_2": {"S": "e8a7b7c8-4cd7-4bff-97aa-747e0e318478" },
+        ":uuid_3": {"S": "03c582d1-e552-4a00-86ab-d489be759a89" },
+        ":uuid_4": {"S": "96dc65e4-e78e-483b-a77e-d82edf3e1707" },
+        ":uuid_5": {"S": "d77042a5-71c4-4532-a367-11be4d372693" },
+        ":uuid_6": {"S": "c4bddf11-5f09-4b21-b0e4-01218750a3b1" },
+        ":uuid_7": {"S": "287939f9-57b7-42f3-bf30-bbd3f4669eb9" },
+        ":uuid_8": {"S": "9e8966f0-db66-4651-b4ce-78d56446ee9f" },
+        ":uuid_9": {"S": "068c9d9a-efaf-41de-b185-6d119cdf3aaf" },
+        ":uuid_10": {"S": "defe0550-8eb0-4d51-8986-d9a41a89cebc" },
+        ":uuid_11": {"S": "9a4f9eeb-d72a-4ff5-8a65-3e834b38de8a" },
+        ":uuid_12": {"S": "d1b7a7ae-01fa-4c33-9c10-56af1d2b30fd" },
+        ":uuid_13": {"S": "db652b7f-4517-410e-9c51-6bec32f525e8" },
+        ":uuid_14": {"S": "1aff25fb-fedb-4935-8788-164b13dc7767" },
+        ":uuid_15": {"S": "8a6fe5af-50fa-4e01-84cc-4b4c8be04b09" },
+        ":uuid_16": {"S": "5c9e622b-7564-4338-93bb-981da18dbabb" },
+        ":uuid_17": {"S": "72f0a9bb-b379-4e03-bb2a-9db335efb859" },
+        ":uuid_18": {"S": "752a4a7c-3cf3-4c77-b639-f3a5fd5edac0" },
+        ":uuid_19": {"S": "dbec3139-b188-4dbb-9cc1-77edbbe0848a" },
+        ":uuid_20": {"S": "9ebc9fa6-896a-4436-a799-066fe61d4d20" },
+        ":uuid_21": {"S": "23dd3026-e3f3-4cb2-9c43-ce026a71696f" },
+        ":uuid_23": {"S": "8ae491cf-ce82-4dda-aa66-aad7add8a1e2" },
+        ":uuid_22": {"S": "a755c818-bc54-4c1a-aa49-4f79e75b17f6" }
+    }' \
+    --projection-expression "dragon_name"
+	
+---
 		
 EQUIVALENT TO QUERY 2 BUT USING AWS CLI INSTEAD OF AWS SDK 
 
@@ -276,6 +321,77 @@ aws dynamodb scan \
 	--expression-attribute-names '{"#family": "family"}' \
 	--filter-expression '#family = :family' \
 	--projection-expression "dragon_name"
+
+---
+
+EQUIVALENT TO QUERY 3 BUT USING AWS CLI INSTEAD OF AWS SDK
+
+aws dynamodb query \
+    --table-name improved_single_dragon_table \
+	--index-name range_index \
+	--no-scan-index-forward \
+	--expression-attribute-values '{
+        ":bonus": {"S": "bonus"}
+    }' \
+	--expression-attribute-names '{"#range": "range"}' \
+	--key-condition-expression 'sk = :bonus' \
+	--projection-expression "pk, #range"
+	
+	
+aws dynamodb scan \
+    --table-name improved_single_dragon_table \
+	--index-name dragon_stats_index \
+	--filter-expression 'pk in (:uuid_0, :uuid_1, :uuid_2, :uuid_3, :uuid_4, :uuid_5, :uuid_6, :uuid_7, :uuid_8, :uuid_9, :uuid_10, :uuid_11, :uuid_12, :uuid_13, :uuid_14, :uuid_15, :uuid_16, :uuid_17, :uuid_18, :uuid_19, :uuid_20, :uuid_21, :uuid_22, :uuid_23, :uuid_24, :uuid_25, :uuid_26, :uuid_27, :uuid_28, :uuid_29, :uuid_30, :uuid_31, :uuid_32, :uuid_33, :uuid_34, :uuid_35, :uuid_36, :uuid_37, :uuid_38, :uuid_39, :uuid_40, :uuid_41, :uuid_42, :uuid_43, :uuid_44, :uuid_45, :uuid_46, :uuid_47)' \
+	--expression-attribute-values '{
+        ":uuid_0": {"S": "846bbc0d-1959-4dc7-beb7-57139f1ac5c5" },
+        ":uuid_1": {"S": "83370872-8180-4dc5-8c00-a2b01c1bfc02" },
+        ":uuid_2": {"S": "bfd9ec73-d5e8-438a-8622-af5e8ca002e3" },
+        ":uuid_3": {"S": "7c5ad28a-e5fb-4596-8378-072afe09c8fe" },
+        ":uuid_4": {"S": "b7c60a55-c0e3-4a99-ab16-5eddbd4074de" },
+        ":uuid_5": {"S": "826597eb-8783-4b91-bb44-3efd964536a1" },
+        ":uuid_6": {"S": "6c457d49-9154-4ec0-98e5-fa723607dc8f" },
+        ":uuid_7": {"S": "c82fee17-1edf-42bd-b200-3599a6c1a94f" },
+        ":uuid_8": {"S": "69961f9b-c53d-4876-9548-1add056c7d61" },
+        ":uuid_9": {"S": "7ee546c1-9c31-400f-96d2-4fb7e7f748e7" },
+        ":uuid_10": {"S": "7195ead1-ecf6-4f99-8033-c1bf315d5b3b" },
+        ":uuid_11": {"S": "1e2b5090-9fbe-4cf7-9a95-1d1fba32d203" },
+        ":uuid_12": {"S": "be0bb70f-678d-4c21-babb-d089a22df25e" },
+        ":uuid_13": {"S": "96dc65e4-e78e-483b-a77e-d82edf3e1707" },
+        ":uuid_14": {"S": "03c582d1-e552-4a00-86ab-d489be759a89" },
+        ":uuid_15": {"S": "8a6fe5af-50fa-4e01-84cc-4b4c8be04b09" },
+        ":uuid_16": {"S": "d1b7a7ae-01fa-4c33-9c10-56af1d2b30fd" },
+        ":uuid_17": {"S": "287939f9-57b7-42f3-bf30-bbd3f4669eb9" },
+        ":uuid_18": {"S": "d77042a5-71c4-4532-a367-11be4d372693" },
+        ":uuid_19": {"S": "5c9e622b-7564-4338-93bb-981da18dbabb" },
+        ":uuid_20": {"S": "a755c818-bc54-4c1a-aa49-4f79e75b17f6" },
+        ":uuid_21": {"S": "9e8966f0-db66-4651-b4ce-78d56446ee9f" },
+        ":uuid_22": {"S": "e8a7b7c8-4cd7-4bff-97aa-747e0e318478" },
+        ":uuid_23": {"S": "1aff25fb-fedb-4935-8788-164b13dc7767" },
+        ":uuid_24": {"S": "de52cfae-c380-43c6-a12d-c57ced4c8847" },
+        ":uuid_25": {"S": "23dd3026-e3f3-4cb2-9c43-ce026a71696f" },
+        ":uuid_26": {"S": "72f0a9bb-b379-4e03-bb2a-9db335efb859" },
+        ":uuid_27": {"S": "068c9d9a-efaf-41de-b185-6d119cdf3aaf" },
+        ":uuid_28": {"S": "c4bddf11-5f09-4b21-b0e4-01218750a3b1" },
+        ":uuid_29": {"S": "752a4a7c-3cf3-4c77-b639-f3a5fd5edac0" },
+        ":uuid_30": {"S": "9a4f9eeb-d72a-4ff5-8a65-3e834b38de8a" },
+        ":uuid_31": {"S": "8ae491cf-ce82-4dda-aa66-aad7add8a1e2" },
+        ":uuid_32": {"S": "9ebc9fa6-896a-4436-a799-066fe61d4d20" },
+        ":uuid_33": {"S": "dbec3139-b188-4dbb-9cc1-77edbbe0848a" },
+        ":uuid_34": {"S": "db652b7f-4517-410e-9c51-6bec32f525e8" },
+        ":uuid_35": {"S": "defe0550-8eb0-4d51-8986-d9a41a89cebc" },
+        ":uuid_36": {"S": "6880ef17-46d3-40b5-aca2-c449d9a9d7bf" },
+        ":uuid_37": {"S": "656d841f-394e-4685-9b26-63eca7dba0e8" },
+        ":uuid_38": {"S": "76d279c4-d410-4430-8842-69985faad8c8" },
+        ":uuid_39": {"S": "d4faddb3-34d0-4669-a0e8-76099fcbbb5d" },
+        ":uuid_40": {"S": "797fc6f5-a573-41d4-b784-688dadfe3e19" },
+        ":uuid_41": {"S": "65118d49-531f-4a6c-b4c4-e7439f2c3eb6" },
+        ":uuid_42": {"S": "c2dbcea1-7168-465b-a87f-53e5837c021d" },
+        ":uuid_43": {"S": "838e2360-257d-474e-bd45-2885952fa09d" },
+        ":uuid_44": {"S": "4c77d4b2-9f5e-45c0-8a58-c136a5019613" },
+        ":uuid_45": {"S": "f88ba6c3-3cef-4115-a452-c81e5f9793fa" },
+        ":uuid_46": {"S": "106a9d9b-2800-4a93-b0a6-e2194ba7cdbf" },
+        ":uuid_47": {"S": "cf38da81-c895-4275-a03c-c2f22dd8c2ad" }
+	}'
 
 ---
 

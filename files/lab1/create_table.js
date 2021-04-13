@@ -11,28 +11,28 @@
 //* express or implied. See the License for the specific language governing
 //* permissions and limitations under the License.
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "<FMI>"
-    });                                              
+    });
 
-(function createADataBaseTable(){
-    var 
+(function createADataBaseTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "dragon_name", 
+                AttributeName: "dragon_name",
                 AttributeType: "S"
-            }], 
-            <FMI>: [{
-                AttributeName: "dragon_name", 
-                KeyType: "HASH"
             }],
-            BillingMode: "PAY_PER_REQUEST",
-            <FMI>: "dragons"
-        };
-     DDB.<FMI>(params, function(err, data){
-         console.log(err, data);             
-     });
-})();
+    <FMI>: [{
+        AttributeName: "dragon_name",
+        KeyType: "HASH"
+    }],
+        BillingMode: "PAY_PER_REQUEST",
+        <FMI>: "dragons"
+            };
+            DDB.<FMI>(params, function(err, data){
+                console.log(err, data);
+            });
+                })();

@@ -16,27 +16,27 @@
 var
     AWS = require("aws-sdk"),
     BCRYPT = require("bcrypt"),
-    UUID4 = require("uuid/v4"),                    
+    UUID4 = require("uuid/v4"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-1"
     });
 
-(function uploadMaryAsAdmin(){
+(function uploadMaryAsAdmin() {
     var
         admin = {
-            Item:{
-                "user_name":{
+            Item: {
+                "user_name": {
                     S: "mary001"
                 },
                 "first_name": {
-                	S: "mary"
+                    S: "mary"
                 },
                 "email_address": {
-                	S: "mary@dragoncardgame001.com"
+                    S: "mary@dragoncardgame001.com"
                 },
                 "password": {
-                    S:  BCRYPT.hashSync("pears", 10)
+                    S: BCRYPT.hashSync("pears", 10)
                 },
                 "admin": {
                     BOOL: true
@@ -45,7 +45,7 @@ var
             ReturnConsumedCapacity: "TOTAL",
             TableName: "users"
         };
-     DDB.putItem(admin, function(err, data){
-         console.log(err, data);
-     });
+    DDB.putItem(admin, function (err, data) {
+        console.log(err, data);
+    });
 })();

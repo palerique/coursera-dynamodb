@@ -24,8 +24,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     margin: 0;
@@ -35,78 +35,93 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
 
-html{
+html {
     background: #f1f1f1;
 }
 
 /*core*/
-h1, h2, h3, h4,h5,h6, p{
+h1, h2, h3, h4, h5, h6, p {
     padding: 12px 24px;
 }
 
-h1{
+h1 {
     font-size: 48px;
 }
-h2{
+
+h2 {
     font-size: 32px;
     border-bottom: 4px solid #e8d0d0;
     padding-bottom: 18px;
 }
-h3{
+
+h3 {
     font-size: 28px;
 }
-h4{
+
+h4 {
     color: white;
     position: relative;
     top: 18px;
     text-align: right;
     font-size: 28px;
 }
-h5{
+
+h5 {
     font-size: 14px;
 }
-p{
+
+p {
     font-size: 20px;
 }
-label{
+
+label {
     padding: 12px 24px;
     display: block;
     font-size: 24px;
     /*margin-bottom: 24px;*/
 
 }
-header{
+
+header {
     margin-bottom: 24px;
 }
-select{
+
+select {
     margin: 12px 24px;
 }
-figure{
-    background: rgba(0,0,0, 0.1);
+
+figure {
+    background: rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: block;
     width: 300px;
@@ -114,7 +129,8 @@ figure{
     border-radius: 0 0 8px 8px;
     border-top: 2px dashed #f1f1f14f;
 }
-figcaption{
+
+figcaption {
     padding: 8px;
     height: 64px;
     /* text-align: center; */
@@ -125,6 +141,7 @@ figcaption{
     background: white;
     line-height: 17px;
 }
+
 /*
     select stuff
 */
@@ -141,57 +158,63 @@ figcaption{
     box-sizing: border-box;
     /*margin: 0;*/
     border: 1px solid #aaa;
-    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
     border-radius: .5em;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
     background-color: #fff;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-      linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+    linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
     background-repeat: no-repeat, repeat;
     background-position: right .7em top 50%, 0 0;
     background-size: .65em auto, 100%;
 }
+
 .select-css::-ms-expand {
     display: none;
 }
-article{
+
+article {
     background: #8b0001;
     display: inline-block;
     margin: 1%;
     border-radius: 8px;
 }
+
 /* out stuff */
-header{
+header {
     background-color: darkred;
     color: white;
 }
 
-[data-showing="not_showing"]{
+[data-showing="not_showing"] {
     display: none;
 }
 
-[data-role="dragon_info"]{
+[data-role="dragon_info"] {
 }
-[data-family]{
+
+[data-family] {
     background-repeat: no-repeat;
-    box-shadow: 3px 3px 9px rgba(0,0,0,0.2);
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
     background-color: white;
     cursor: pointer;
     border: 1px solid #7d7777;
     margin-left: 18px;
 }
-[data-role="card_internals"]{
+
+[data-role="card_internals"] {
     background-color: #3c3c3c61;
     border-radius: 8px;
     margin: 6px;
 }
-[data-role="filter_type"]{
+
+[data-role="filter_type"] {
     color: darkred;
 }
 
-[data-role="damage"]{
+[data-role="damage"] {
     margin-left: 12px;
     background-color: #f50707;
     border: 6px double #928e8e;
@@ -208,9 +231,10 @@ header{
     left: 8px;
     position: relative;
     top: 18px;
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
 }
-[data-role="protection"]{
+
+[data-role="protection"] {
     margin-left: 12px;
     background-color: #64c642;
     border: 6px double #928e8e;
@@ -227,20 +251,25 @@ header{
     left: 8px;
     position: relative;
     top: 18px;
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
 }
-[data-role="protection"]{
+
+[data-role="protection"] {
     margin-left: 12px;
 }
-[data-family="black"]{
+
+[data-family="black"] {
     background-image: url("https://s3.amazonaws.com/awsu-hosting/edx_dynamo/s3/lab3/images/backdrop_card_black.gif");
 }
-[data-family="red"]{
+
+[data-family="red"] {
     background-image: url("https://s3.amazonaws.com/awsu-hosting/edx_dynamo/s3/lab3/images/backdrop_card_red.gif");
 }
-[data-family="green"]{
+
+[data-family="green"] {
     background-image: url("https://s3.amazonaws.com/awsu-hosting/edx_dynamo/s3/lab3/images/backdrop_card_green.gif");
 }
-[data-family="blue"]{
+
+[data-family="blue"] {
     background-image: url("https://s3.amazonaws.com/awsu-hosting/edx_dynamo/s3/lab3/images/backdrop_card_blue.gif");
 }

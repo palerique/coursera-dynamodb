@@ -28,7 +28,7 @@ function <FMI>(){
         params = {},
         location_str = "";
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_one.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_one.json");
 
     for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
         location_str =  DRAGON_DATA_ARR[i_int].location_country_str + "#" +
@@ -78,7 +78,7 @@ function pushToDragonStatsTwo(){
         params = {},
         location_str = "";
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_two.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_two.json");
 
     for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
         location_str =  DRAGON_DATA_ARR[i_int].location_country_str + "#" +

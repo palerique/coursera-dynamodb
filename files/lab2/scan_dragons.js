@@ -11,34 +11,35 @@
 //* express or implied. See the License for the specific language governing
 //* permissions and limitations under the License.
 
-exports.handler = function(event, context, callback){ 
-   console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
-   console.log("running in Lambda");
-   scanTable(callback);
+exports.handler = function (event, context, callback) {
+    console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
+    console.log("running in Lambda");
+    scanTable(callback);
 };
 
-var 
-    AWS = require("aws-sdk"),                            
-    DDB = new AWS.<FMI>({
-        apiVersion: "2012-08-10",
-        region: "<FMI>"
-    });                                                   
+var
+    AWS = require("aws-sdk"),
+    DDB = new AWS.
+<FMI>({
+    apiVersion: "2012-08-10",
+    region: "<FMI>"
+});
 
-function scanTable(cb){
-     var 
+    function scanTable(cb){
+        var
         params = {
-            <FMI>: "<FMI>"
+        <FMI>: "<FMI>"
         };
-     DDB.<FMI>(params, function(err, data){
-         if(err){
-             throw err;
-         }
-         cb(null, data.Items); 
-     });
-}
+        DDB.<FMI>(params, function(err, data){
+        if(err){
+        throw err;
+    }
+        cb(null, data.Items);
+    });
+        }
 
-if(process.argv[2] === "test"){
-    console.log("Local test for all dragons");
-    scanTable(console.log);
-}
+        if(process.argv[2] === "test"){
+        console.log("Local test for all dragons");
+        scanTable(console.log);
+    }
 

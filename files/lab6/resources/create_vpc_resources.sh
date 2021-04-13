@@ -32,7 +32,7 @@ echo "  Subnet ID '$SUBNET_PRIVATE_ID' CREATED."
 # Add Name tag to Private Subnet
 aws ec2 create-tags \
   --resources $SUBNET_PRIVATE_ID \
-  --tags "Key=Name,Value=edx-ddb-private-subnet" \
+  --tags "Key=Name,Value=edx-ddb-private-subnet"
 
 # Create Lambda Security Group
 echo "Creating Security Group for Lambda..."

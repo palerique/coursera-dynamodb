@@ -16,35 +16,36 @@
 var LAMBDA_ROLE_ARN_STR = "<FMI>";
 
 
-var 
-    AWS = require("aws-sdk"), 
-    FS = require("fs"),                 
+var
+    AWS = require("aws-sdk"),
+    FS = require("fs"),
     LAMBDA = new AWS.Lambda({
         apiVersion: "2015-03-31",
         region: "us-east-1"
-    });    
+    });
 
-function createLambdaFunction(zip_bin){
-    var 
-    	params = {
-			Code: {
-				ZipFile: new Buffer(zip_bin)
-			}, 
-			Description: "Login functionality", 
-			FunctionName: "LoginEdXDragonGame", 
-			Handler: "login.handler",
-			MemorySize: 128, 
-			Publish: true, 
-			Role: LAMBDA_ROLE_ARN_STR,
-			Runtime: "nodejs8.10", 
-			Timeout: 30
-		};
-     return LAMBDA.createFunction(params).promise();
+function createLambdaFunction(zip_bin) {
+    var
+        params = {
+            Code: {
+                ZipFile: new Buffer(zip_bin)
+            },
+            Description: "Login functionality",
+            FunctionName: "LoginEdXDragonGame",
+            Handler: "login.handler",
+            MemorySize: 128,
+            Publish: true,
+            Role: LAMBDA_ROLE_ARN_STR,
+            Runtime: "nodejs8.10",
+            Timeout: 30
+        };
+    return LAMBDA.createFunction(params).promise();
 }
-(async function init(){
-	 var 
-        file_path_str = "/home/ec2-user/environment/lab5/",
+
+(async function init() {
+    var
+        file_path_str = "/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab5/",
         file_name_str = "login.zip",
         zip_bin = FS.readFileSync(file_path_str + file_name_str);
-	console.log(await createLambdaFunction(zip_bin));
+    console.log(await createLambdaFunction(zip_bin));
 })();

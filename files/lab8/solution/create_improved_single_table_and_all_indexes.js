@@ -13,40 +13,40 @@
 * permissions and limitations under the License.
 */
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-2"
-    });                                              
+    });
 
-(function createImprovedTableAndAllIndexes(){
-    var 
+(function createImprovedTableAndAllIndexes() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "pk", 
+                AttributeName: "pk",
                 AttributeType: "S"
-            },{
-                AttributeName: "sk", 
+            }, {
+                AttributeName: "sk",
                 AttributeType: "S"
-            },{
-                AttributeName: "range", 
+            }, {
+                AttributeName: "range",
                 AttributeType: "N"
-            },{
-                AttributeName: "location", 
+            }, {
+                AttributeName: "location",
                 AttributeType: "S"
-            },{
-                AttributeName: "dragon_name", 
+            }, {
+                AttributeName: "dragon_name",
                 AttributeType: "S"
-            },{
-                AttributeName: "bonus_description", 
+            }, {
+                AttributeName: "bonus_description",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "pk", 
+                AttributeName: "pk",
                 KeyType: "HASH"
-            },{
-                AttributeName: "sk", 
+            }, {
+                AttributeName: "sk",
                 KeyType: "RANGE"
             }],
             BillingMode: "PAY_PER_REQUEST",
@@ -66,7 +66,7 @@ var
                     ],
                     ProjectionType: "INCLUDE"
                 }
-            },{
+            }, {
                 IndexName: "bonus_description_index",
                 KeySchema: [{
                     AttributeName: "bonus_description",
@@ -78,12 +78,12 @@ var
                     ],
                     ProjectionType: "INCLUDE"
                 }
-            },{
+            }, {
                 IndexName: "range_index",
                 KeySchema: [{
                     AttributeName: "sk",
                     KeyType: "HASH"
-                },{
+                }, {
                     AttributeName: "range",
                     KeyType: "RANGE"
                 }],
@@ -93,12 +93,12 @@ var
                     ],
                     ProjectionType: "INCLUDE"
                 }
-            },{
+            }, {
                 IndexName: "location_index",
                 KeySchema: [{
                     AttributeName: "sk",
                     KeyType: "HASH"
-                },{
+                }, {
                     AttributeName: "location",
                     KeyType: "RANGE"
                 }],
@@ -114,7 +114,7 @@ var
                 }
             }]
         };
-     DDB.createTable(params, function(err, data){
-         console.log(err, data);             
-     });
+    DDB.createTable(params, function (err, data) {
+        console.log(err, data);
+    });
 })();

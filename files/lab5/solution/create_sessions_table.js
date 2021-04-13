@@ -13,34 +13,34 @@
 * permissions and limitations under the License.
 */
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-1"
-    });                                              
+    });
 
-(function createASessionsTable(){
-    var 
+(function createASessionsTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "session_id", 
+                AttributeName: "session_id",
                 AttributeType: "S"
-            },{
-                AttributeName: "user_name", 
+            }, {
+                AttributeName: "user_name",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "session_id", 
+                AttributeName: "session_id",
                 KeyType: "HASH"
-            },{
-                AttributeName: "user_name", 
+            }, {
+                AttributeName: "user_name",
                 KeyType: "RANGE"
             }],
             BillingMode: "PAY_PER_REQUEST",
             TableName: "sessions"
         };
-     DDB.createTable(params, function(err, data){
-         console.log(err, data);             
-     });
+    DDB.createTable(params, function (err, data) {
+        console.log(err, data);
+    });
 })();

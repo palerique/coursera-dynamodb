@@ -14,12 +14,12 @@
 * permissions and limitations under the License.
 */
 
-var 
+var
     AWSXRay = null,
     AWS = null;
 
 exports.handler = function (event, contexts, callback) {
-        AWSXRay = require("aws-xray-sdk-core"),
+    AWSXRay = require("aws-xray-sdk-core"),
         AWS = AWSXRay.captureAWS(require("aws-sdk"));
     if (event["dragon_name_str"] !== undefined && event["dragon_name_str"] !== "All") {
         justThisDragon(event["dragon_name_str"], callback);
@@ -28,7 +28,7 @@ exports.handler = function (event, contexts, callback) {
     }
 };
 
-if(AWSXRay === null){
+if (AWSXRay === null) {
     AWS = require("aws-sdk");
 }
 
@@ -62,6 +62,7 @@ function justThisDragon(dragon_name_str, cb) {
         }
     });
 }
+
 function scanTable(cb) {
     var
         params = {
@@ -76,11 +77,11 @@ function scanTable(cb) {
         if (err) {
             cb(err);
         } else if (data.LastEvaluatedKey) {
-            
+
             items = items.concat(data.Items);
-            
+
             params.ExclusiveStartKey = data.LastEvaluatedKey;
-            
+
             DDB.scan(params, scanUntilDone);
         } else {
             items = items.concat(data.Items);
@@ -90,12 +91,11 @@ function scanTable(cb) {
 }
 
 
-
-if(process.argv[2] === "test"){
-    if(process.argv[3] && process.argv[3] !== "All"){
+if (process.argv[2] === "test") {
+    if (process.argv[3] && process.argv[3] !== "All") {
         console.log("Local test for a dragon called " + process.argv[3]);
         justThisDragon(process.argv[3], console.log);
-    }else{
+    } else {
         console.log("Local test for all dragons");
         scanTable(console.log);
     }

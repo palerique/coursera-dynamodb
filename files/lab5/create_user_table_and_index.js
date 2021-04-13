@@ -13,44 +13,44 @@
 * permissions and limitations under the License.
 */
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "<FMI>"
-    });                                              
+    });
 
-(function createADataBaseTableAndIndex(){
-    var 
+(function createADataBaseTableAndIndex() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "user_name", 
+                AttributeName: "user_name",
                 AttributeType: "S"
-            },{
-                AttributeName: "email_address", 
+            }, {
+                AttributeName: "email_address",
                 AttributeType: "S"
-            }], 
-            KeySchema: [{
-                <FMI>: "user_name", 
-                KeyType: "HASH"
             }],
-            <FMI>: "PAY_PER_REQUEST",
-            TableName: "users",
-            GlobalSecondaryIndexes: [{
-                IndexName: "email_index",
-                KeySchema: [{
-                    AttributeName: "email_address",
+            KeySchema: [{
+                <FMI>: "user_name",
                     KeyType: "HASH"
-                }],
-                Projection: {
-                    NonKeyAttributes: [
-                        "<FMI>",
-                    ],
-                    ProjectionType: "INCLUDE"
-                }
-            }]
-        };
-     DDB.createTable(params, function(err, data){
-         console.log(err, data);             
-     });
-})();
+                    }],
+                    <FMI>: "PAY_PER_REQUEST",
+                        TableName: "users",
+                        GlobalSecondaryIndexes: [{
+                            IndexName: "email_index",
+                            KeySchema: [{
+                            AttributeName: "email_address",
+                            KeyType: "HASH"
+                        }],
+                            Projection: {
+                            NonKeyAttributes: [
+                            "<FMI>",
+                            ],
+                            ProjectionType: "INCLUDE"
+                        }
+                        }]
+                        };
+                        DDB.createTable(params, function(err, data){
+                            console.log(err, data);
+                        });
+                        })();

@@ -23,7 +23,8 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-2"
     });
-function stageOne(family_str, cb){
+
+function stageOne(family_str, cb) {
     var params = {
         TableName: "improved_single_dragon_table",
         IndexName: "dragon_stats_index",
@@ -38,20 +39,20 @@ function stageOne(family_str, cb){
         FilterExpression: "#family = :family",
         ProjectionExpression: "dragon_name"
     };
-    
-    DDB.scan(params, function (err, data){
-        if(err){
+
+    DDB.scan(params, function (err, data) {
+        if (err) {
             return cb(err, null);
         }
         cb(null, data.Items);
     });
 }
 
-if(process.argv[2] === "test"){
-    if(process.argv[3]){
+if (process.argv[2] === "test") {
+    if (process.argv[3]) {
         var family_str = process.argv[3];
-        stageOne(family_str, function(err, dragon_id_arr){
-            if(err){
+        stageOne(family_str, function (err, dragon_id_arr) {
+            if (err) {
                 throw err;
             }
             console.log(null, dragon_id_arr);

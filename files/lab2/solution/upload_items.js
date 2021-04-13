@@ -18,55 +18,55 @@ var
         region: "us-east-2"
     });
 
-(function uploadItemstoDynamoDB(){
+(function uploadItemstoDynamoDB() {
     var
         dragon_1 = {
-            Item:{
-                "dragon_name":{
+            Item: {
+                "dragon_name": {
                     S: "sparky"
                 },
-                "dragon_type":{
+                "dragon_type": {
                     S: "green"
-                },	
-                "description":{
+                },
+                "description": {
                     S: "breaths acid"
                 },
-                "attack":{
+                "attack": {
                     N: "10"
                 },
-                "defense":{
-                    N: "7" 
+                "defense": {
+                    N: "7"
                 }
             },
             ReturnConsumedCapacity: "TOTAL",
             TableName: "dragons"
         };
-     DDB.putItem(dragon_1, function(err, data){
-         console.log(err, data);
-     });
-     var
+    DDB.putItem(dragon_1, function (err, data) {
+        console.log(err, data);
+    });
+    var
         dragon_2 = {
-            Item:{
-                "dragon_name":{
+            Item: {
+                "dragon_name": {
                     S: "tallie"
                 },
-                "dragon_type":{
+                "dragon_type": {
                     S: "red"
                 },
-                "description":{
+                "description": {
                     S: "breaths fire"
                 },
-                "attack":{
+                "attack": {
                     N: "7"
                 },
-                "defense":{
+                "defense": {
                     N: "10"
-                } 
+                }
             },
             ReturnConsumedCapacity: "TOTAL",
             TableName: "dragons"
         };
-     DDB.putItem(dragon_2, function(err, data){
-         console.log(err, data);
-     });
+    DDB.putItem(dragon_2, function (err, data) {
+        console.log(err, data);
+    });
 })();

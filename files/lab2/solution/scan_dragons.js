@@ -11,33 +11,33 @@
 //* express or implied. See the License for the specific language governing
 //* permissions and limitations under the License.
 
-exports.handler = function(event, context, callback){ 
-   console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
-   console.log("running in Lambda");
-   scanTable(callback);
+exports.handler = function (event, context, callback) {
+    console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
+    console.log("running in Lambda");
+    scanTable(callback);
 };
 
-var 
-    AWS = require("aws-sdk"),                            
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-2"
-    });                                                   
+    });
 
-function scanTable(cb){
-     var 
+function scanTable(cb) {
+    var
         params = {
             TableName: "dragons"
         };
-     DDB.scan(params, function(err, data){
-         if(err){
-             throw err;
-         }
-         cb(null, data.Items); 
-     });
+    DDB.scan(params, function (err, data) {
+        if (err) {
+            throw err;
+        }
+        cb(null, data.Items);
+    });
 }
 
-if(process.argv[2] === "test"){
+if (process.argv[2] === "test") {
     console.log("Local test for all dragons");
     scanTable(console.log);
 }

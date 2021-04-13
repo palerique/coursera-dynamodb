@@ -18,55 +18,55 @@ var
         region: "<FMI>"
     });
 
-(function uploadItemstoDynamoDB(){
+(function uploadItemstoDynamoDB() {
     var
         dragon_1 = {
-            <FMI>:{
-                "dragon_name":{
-                    S: "sparky"
-                },
-                "dragon_type":{
-                    S: "green"
-                },	
-                "description":{
-                    S: "breaths acid"
-                },
-                "attack":{
-                    N: "10"
-                },
-                "defense":{
-                    N: "7" 
-                }
-            },
-            <FMI>: "TOTAL",
+    <FMI>:{
+        "dragon_name":{
+        S: "sparky"
+    },
+        "dragon_type":{
+        S: "green"
+    },
+        "description":{
+        S: "breaths acid"
+    },
+        "attack":{
+        N: "10"
+    },
+        "defense":{
+        N: "7"
+    }
+    },
+        <FMI>: "TOTAL",
             <FMI>: "dragons"
-        };
-     DDB.putItem(dragon_1, function(err, data){
-         console.log(err, data);
-     });
-     var
-        dragon_2 = {
-            <FMI>:{
-                "dragon_name":{
-                    S: "tallie"
-                },
-                "dragon_type":{
-                    S: "red"
-                },
-                "description":{
-                    S: "breaths fire"
-                },
-                "attack":{
-                    N: "7"
-                },
-                "defense":{
-                    N: "10"
-                } 
-            },
-            <FMI>: "TOTAL",
-            <FMI>: "dragons"
-        };
-     DDB.<FMI>(dragon_2, function(err, data){
-         console.log(err, data);
-     });
-})();
+                };
+                DDB.putItem(dragon_1, function(err, data){
+                    console.log(err, data);
+                });
+                var
+                dragon_2 = {
+                    <FMI>:{
+                        "dragon_name":{
+                        S: "tallie"
+                    },
+                        "dragon_type":{
+                        S: "red"
+                    },
+                        "description":{
+                        S: "breaths fire"
+                    },
+                        "attack":{
+                        N: "7"
+                    },
+                        "defense":{
+                        N: "10"
+                    }
+                    },
+                        <FMI>: "TOTAL",
+                            <FMI>: "dragons"
+                                };
+                                DDB.<FMI>(dragon_2, function(err, data){
+                                    console.log(err, data);
+                                });
+                                    })();

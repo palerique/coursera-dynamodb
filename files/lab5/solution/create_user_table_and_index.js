@@ -13,25 +13,25 @@
 * permissions and limitations under the License.
 */
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-1"
-    });                                              
+    });
 
-(function createADataBaseTableAndIndex(){
-    var 
+(function createADataBaseTableAndIndex() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "user_name", 
+                AttributeName: "user_name",
                 AttributeType: "S"
-            },{
-                AttributeName: "email_address", 
+            }, {
+                AttributeName: "email_address",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "user_name", 
+                AttributeName: "user_name",
                 KeyType: "HASH"
             }],
             BillingMode: "PAY_PER_REQUEST",
@@ -50,7 +50,7 @@ var
                 }
             }]
         };
-     DDB.createTable(params, function(err, data){
-         console.log(err, data);             
-     });
+    DDB.createTable(params, function (err, data) {
+        console.log(err, data);
+    });
 })();

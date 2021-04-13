@@ -41,15 +41,16 @@ function justThisDragon(dragon_name_str, cb) {
             IndexName: "dragon_stats_index"
         };
     DDB.query(params, function (err, data) {
-        if(err) {
+        if (err) {
             cb(err, null);
-        }else if(data.Items){
+        } else if (data.Items) {
             cb(null, data.Items);
-        }else{
+        } else {
             cb(null, []);
         }
     });
 }
+
 function scanIndex(cb) {
     var
         params = {
@@ -57,26 +58,27 @@ function scanIndex(cb) {
             IndexName: "dragon_stats_index"
         },
         items = [];
-    DDB.scan(params, function scanUntilDone(err, data){
-        if(err){
+    DDB.scan(params, function scanUntilDone(err, data) {
+        if (err) {
             cb(err, null);
-        }else if(data.LastEvaluatedKey){
+        } else if (data.LastEvaluatedKey) {
             items = items.concat(data.Items);
             params.ExclusiveStartKey = data.LastEvaluatedKey;
             DDB.scan(params, scanUntilDone);
-        }else{
+        } else {
             items = items.concat(data.Items);
-            
+
             cb(null, items);
             console.log("Total items scanned: " + items.length);
         }
     });
 }
-if(process.argv[2] === "test"){
-    if(process.argv[3] && process.argv[3] !== "All"){
+
+if (process.argv[2] === "test") {
+    if (process.argv[3] && process.argv[3] !== "All") {
         console.log("Local test for a dragon called " + process.argv[3]);
         justThisDragon(process.argv[3], console.log);
-    }else{
+    } else {
         console.log("Local test for all dragons");
         scanIndex(console.log);
     }

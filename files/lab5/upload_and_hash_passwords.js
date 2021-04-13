@@ -22,8 +22,8 @@ var
     });
 
 
-function <FMI>(){
-    var 
+function <FMI>() {
+    var
         user = {},
         user_formatted_arr = [],
         params = {},
@@ -31,7 +31,7 @@ function <FMI>(){
 
     var USER_DATA_ARR = require("./resources/users.json");
 
-    for(var i_int = 0; i_int < USER_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < USER_DATA_ARR.length; i_int += 1) {
         //only a very small list of users so no need for async optimization here.
         password_str = BCRYPT.hashSync(USER_DATA_ARR[i_int].temp_password_str, 10);
         user = {
@@ -59,14 +59,14 @@ function <FMI>(){
             "<FMI>": user_formatted_arr.reverse()
         }
     };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
 
-(async function seed(){
+(async function seed() {
     console.time("HowFastWasThat");
     //async 2x speed
     console.log(await Promise.all([
-        pushToUsersTable() 
-     ]));
+        pushToUsersTable()
+    ]));
     console.timeEnd("HowFastWasThat");
 })();

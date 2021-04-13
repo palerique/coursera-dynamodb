@@ -22,16 +22,16 @@ var
     });
 
 
-function pushToUsersTable(){
-    var 
+function pushToUsersTable() {
+    var
         user = {},
         user_formatted_arr = [],
         params = {},
         password_str = "";
 
-    var USER_DATA_ARR = require("/home/ec2-user/environment/lab5/resources/users.json");
+    var USER_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab5/resources/users.json");
 
-    for(var i_int = 0; i_int < USER_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < USER_DATA_ARR.length; i_int += 1) {
         //only a very small list of users so no need for async optimization here.
         password_str = BCRYPT.hashSync(USER_DATA_ARR[i_int].temp_password_str, 10);
         user = {
@@ -62,11 +62,11 @@ function pushToUsersTable(){
     return DDB.batchWriteItem(params).promise();
 }
 
-(async function seed(){
+(async function seed() {
     console.time("HowFastWasThat");
     //async 2x speed
     console.log(await Promise.all([
-        pushToUsersTable() 
-     ]));
+        pushToUsersTable()
+    ]));
     console.timeEnd("HowFastWasThat");
 })();

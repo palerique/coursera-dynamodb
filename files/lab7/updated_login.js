@@ -13,103 +13,118 @@
 * permissions and limitations under the License.
 */
 
-exports.handler = function(event, context, callback){ 
-   console.log("To run a Local test in Cloud 9 use `node login.js test 'email_address_str` 'attempted_password_str'");
-   console.log("Running in Lambda");
-   if(event["email_address_str"] && event["attempted_password_str"]){
+exports.handler = function (event, context, callback) {
+    console.log("To run a Local test in Cloud 9 use `node login.js test 'email_address_str` 'attempted_password_str'");
+    console.log("Running in Lambda");
+    if (event["email_address_str"] && event["attempted_password_str"]) {
         logMeIn(event["email_address_str"], event["attempted_password_str"], callback);
-   }else{
+    } else {
         callback("no credentials passed", null);
-   }
+    }
 };
 
-var 
-    AWS = require("aws-sdk"),   
-    BCRYPT = require("bcrypt"),  
-    UUID4 = require("uuid/v4"),                     
-    DDB = new AWS.<FMI<({
-        apiVersion: "2012-08-10",
-        region: "us-east-1"
-    }),
-    SESSION_TIMEOUT_IN_MINUTES_INT = 20;
+var
+    AWS = require("aws-sdk"),
+    BCRYPT = require("bcrypt"),
+    UUID4 = require("uuid/v4"),
+    DDB = new AWS.
+<FMI
+<({
+apiVersion: "2012-08-10",
+region: "us-east-1"
+}),
+SESSION_TIMEOUT_IN_MINUTES_INT = 20;
 
 async function createSession(user_name_str, new_session_id_str, admin_boo){
-    var 
-        params = {
-            Item: {
-                "session_id": {
-                    S: new_session_id_str
-                }, 
-                "user_name": {
-                     S: user_name_str
-                }, 
-                "expiration_time": {
-                    N: (Math.floor((new Date).getTime()/1000) + (60 * SESSION_TIMEOUT_IN_MINUTES_INT)).toString()
-                }
-            }, 
-            ReturnConsumedCapacity: "TOTAL", 
-            TableName: "<FMI>"
-     };
-     if(admin_boo === true){
-        params.Item.<FMI> = {
-            BOOL: true 
-        };
-     }
-     return DDB.<FMI>(params).promise();
-}
+var
+params =
+{
+    Item: {
+        "session_id"
+    :
+        {
+            S: new_session_id_str
+        }
+    ,
+        "user_name"
+    :
+        {
+            S: user_name_str
+        }
+    ,
+        "expiration_time"
+    :
+        {
+            N: (Math.floor((new Date).getTime() / 1000) + (60 * SESSION_TIMEOUT_IN_MINUTES_INT)).toString()
+        }
+    }
+,
+    ReturnConsumedCapacity: "TOTAL",
+        TableName
+:
+    "<FMI>"
+};
+if(admin_boo === true){
+params.Item.
+<FMI> = {
+    BOOL: true
+};
+    }
+    return DDB.<FMI>(params).promise();
+        }
 
-function logMeIn(email_address_str, attempted_password_str, cb){
-    var 
-        params = {
+        function logMeIn(email_address_str, attempted_password_str, cb){
+            var
+            params = {
             ExpressionAttributeValues: {
-                ":email_address": {
-                    S: email_address_str
-                }
-            },
+            ":email_address": {
+            S: email_address_str
+        }
+        },
             KeyConditionExpression: "email_address = :email_address",
             TableName: "users",
             IndexName: "email_admin_index"
         };
-     DDB.query(params, async function(err, data){
-         var 
+            DDB.query(params, async function(err, data){
+            var
             new_session_id_str = UUID4(),
             return_me = {},
             admin_boo = false;
-         if(err){
-             throw err;
-         }
-         if(data.Items && data.Items[0]){
+            if(err){
+            throw err;
+        }
+            if(data.Items && data.Items[0]){
             console.log(data.Items[0].password.S, attempted_password_str);
             if(BCRYPT.compareSync(attempted_password_str, data.Items[0].password.S) === true){
-                console.log("Password is correct");
-                if(data.Items[0].admin && data.Items[0].admin.BOOL === true){ 
-                    console.log(data.Items[0].user_name.S + " is an admin");
-                    admin_boo = true;
-                }
-                console.log(await createSession(data.Items[0].user_name.S, new_session_id_str, admin_boo));
-                console.log("AWAITED", new_session_id_str);
-                return_me = {
-                    user_name_str: data.Items[0].user_name.S,
-                    session_id_str: new_session_id_str
-                };
-                if(admin_boo === true){
-                    return_me.admin_boo = true;
-                }
-                cb(null, return_me);
-            }else{
-                return cb("password does not match email", null);
-            }
-         }else{
+            console.log("Password is correct");
+            if(data.Items[0].admin && data.Items[0].admin.BOOL === true){
+            console.log(data.Items[0].user_name.S + " is an admin");
+            admin_boo = true;
+        }
+            console.log(await createSession(data.Items[0].user_name.S, new_session_id_str, admin_boo));
+            console.log("AWAITED", new_session_id_str);
+            return_me = {
+            user_name_str: data.Items[0].user_name.S,
+            session_id_str: new_session_id_str
+        };
+            if(admin_boo === true){
+            return_me.admin_boo = true;
+        }
+            cb(null, return_me);
+        }else{
+            return cb("password does not match email", null);
+        }
+        }else{
             cb("credentials invalid", null);
-         }
+        }
 
-     });
-}
-if(process.argv[2] === "test"){
-    if(process.argv[3] && process.argv[4]){
-        console.log("Local test to log in a user with email of " + process.argv[3]);
-        logMeIn(process.argv[3], process.argv[4], console.log);
-    }else{
-        console.log("Pass in email address and password");
-    }
-}
+        });
+        }
+        if(process.argv[2] === "test"){
+            if(process.argv[3] && process.argv[4]){
+            console.log("Local test to log in a user with email of " + process.argv[3]);
+            logMeIn(process.argv[3], process.argv[4], console.log);
+        }else{
+            console.log("Pass in email address and password");
+        }
+        }

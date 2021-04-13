@@ -13,25 +13,25 @@
 * permissions and limitations under the License.
 */
 
-exports.handler = function(event, context, callback){ 
-   console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
-   console.log("running in Lambda");
-   if(event["dragon_name_str"] !== undefined && event["dragon_name_str"] !== "All"){
+exports.handler = function (event, context, callback) {
+    console.log("To run a Local test in Cloud 9 use `node scan_dragons.js test`");
+    console.log("running in Lambda");
+    if (event["dragon_name_str"] !== undefined && event["dragon_name_str"] !== "All") {
         justThisDragon(event["dragon_name_str"], callback);
-   }else{
+    } else {
         scanTable(callback);
-   }
+    }
 };
 
-var 
-    AWS = require("aws-sdk"),                            
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "<FMI>"
-    });    
+    });
 
-function justThisDragon(dragon_name_str, cb){
-    var 
+function justThisDragon(dragon_name_str, cb) {
+    var
         params = {
             ExpressionAttributeValues: {
                 ":dragon_name": {
@@ -41,19 +41,20 @@ function justThisDragon(dragon_name_str, cb){
             FilterExpression: "dragon_name = :dragon_name",
             TableName: "dragon_stats"
         };
-     DDB.<FMI>(params, function(err, data){
-         if(err){
-             throw err;
-         }
-         if(data.Items){
-            cb(null, data.Items); 
-         }else{
-            cb(null,[]);
-         }
-     });
+    DDB. < FMI > (params, function (err, data) {
+        if (err) {
+            throw err;
+        }
+        if (data.Items) {
+            cb(null, data.Items);
+        } else {
+            cb(null, []);
+        }
+    });
 }
-function scanTable(cb){
-     var 
+
+function scanTable(cb) {
+    var
         params = {
             TableName: "<FMI>",
             ExpressionAttributeNames: {
@@ -61,20 +62,20 @@ function scanTable(cb){
             },
             ProjectionExpression: "dragon_name, #family, protection, damage, description"
         };
-      console.log("Full scan all");
-     DDB.scan(params, function(err, data){
-         if(err){
-             throw err;
-         }
-         cb(null, data.Items); 
-     });
+    console.log("Full scan all");
+    DDB.scan(params, function (err, data) {
+        if (err) {
+            throw err;
+        }
+        cb(null, data.Items);
+    });
 }
 
-if(process.argv[2] === "test"){
-    if(process.argv[3] && process.argv[3] !== "All"){
+if (process.argv[2] === "test") {
+    if (process.argv[3] && process.argv[3] !== "All") {
         console.log("Local test for a dragon called " + process.argv[3]);
         justThisDragon(<FMI></FMI>[3], console.log);
-    }else{
+    } else {
         console.log("Local test for all dragons");
         scanTable(console.log);
     }

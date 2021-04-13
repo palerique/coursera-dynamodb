@@ -20,15 +20,16 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-1"
     });
-function pushToDragonStatsTable(){
-    var 
+
+function pushToDragonStatsTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
     var DRAGON_DATA_ARR = require("../resources/dragon_stats.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -46,7 +47,7 @@ function pushToDragonStatsTable(){
                     },
                     location_city: {
                         "S": DRAGON_DATA_ARR[i_int].location_city_str
-                    }, 
+                    },
                     location_country: {
                         "S": DRAGON_DATA_ARR[i_int].location_country_str
                     },
@@ -71,15 +72,16 @@ function pushToDragonStatsTable(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonCurrentPowerTable(){
-    var 
+
+function pushToDragonCurrentPowerTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
     var DRAGON_DATA_ARR = require("../resources/dragon_current_power.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -105,17 +107,18 @@ function pushToDragonCurrentPowerTable(){
             "DragonCurrentPowerTable": dragon_formatted_arr.reverse()
         }
     };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
-function pushToDragonBonusAttackTable(){
-    var 
+
+function pushToDragonBonusAttackTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
     var DRAGON_DATA_ARR = require("../resources/dragon_bonus_attack.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -143,8 +146,9 @@ function pushToDragonBonusAttackTable(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonFamilyTable(){
-    var 
+
+function pushToDragonFamilyTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
@@ -152,7 +156,7 @@ function pushToDragonFamilyTable(){
     var DRAGON_DATA_ARR = require("../resources/dragon_family.json");
 
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -181,17 +185,17 @@ function pushToDragonFamilyTable(){
             "DragonFamilyTable": dragon_formatted_arr.reverse()
         }
     };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
 
-(async function seed(){
+(async function seed() {
     console.time("HowFastWasThat");
     //async 2x speed
     console.log(await Promise.all([
-            pushToDragonStatsTable(), 
-            pushToDragonCurrentPowerTable(),
-            pushToDragonBonusAttackTable(),
-            pushToDragonFamilyTable()
-     ]));
+        pushToDragonStatsTable(),
+        pushToDragonCurrentPowerTable(),
+        pushToDragonBonusAttackTable(),
+        pushToDragonFamilyTable()
+    ]));
     console.timeEnd("HowFastWasThat");
 })();

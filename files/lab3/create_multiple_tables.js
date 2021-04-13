@@ -11,86 +11,89 @@
 //* express or implied. See the License for the specific language governing
 //* permissions and limitations under the License.
 
-var 
-    AWS = require("aws-sdk"),                       
+var
+    AWS = require("aws-sdk"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "us-east-1"
-    });                                              
+    });
 
-function createTheDragonStatsTable(){
-    var 
+function createTheDragonStatsTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "<FMI>", 
+                AttributeName: "<FMI>",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "dragon_name", 
+                AttributeName: "dragon_name",
                 KeyType: "HASH"
             }],
             BillingMode: "PAY_PER_REQUEST",
             TableName: "dragon_stats"
         };
-     return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
-function createTheDragonCurrentPowerTable(){
-    var 
+
+function createTheDragonCurrentPowerTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "<FMI>", 
+                AttributeName: "<FMI>",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "game_id", 
+                AttributeName: "game_id",
                 KeyType: "HASH"
             }],
             BillingMode: "PAY_PER_REQUEST",
             TableName: "dragon_current_power"
         };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
-function createTheDragonBonusAttackTable(){
-    var 
+
+function createTheDragonBonusAttackTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "<FMI>", 
+                AttributeName: "<FMI>",
                 AttributeType: "S"
-            },{
-                AttributeName: "range", 
+            }, {
+                AttributeName: "range",
                 AttributeType: "N"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "breath_attack", 
+                AttributeName: "breath_attack",
                 KeyType: "HASH"
-            },{
-                AttributeName: "range", 
+            }, {
+                AttributeName: "range",
                 KeyType: "RANGE"
             }],
             BillingMode: "PAY_PER_REQUEST",
             TableName: "dragon_bonus_attack"
         };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
-function createTheDragonFamilyTable(){
-    var 
+
+function createTheDragonFamilyTable() {
+    var
         params = {
             AttributeDefinitions: [{
-                AttributeName: "family", 
+                AttributeName: "family",
                 AttributeType: "S"
-            }], 
+            }],
             KeySchema: [{
-                AttributeName: "family", 
+                AttributeName: "family",
                 KeyType: "HASH"
             }],
             BillingMode: "PAY_PER_REQUEST",
             TableName: "dragon_family"
         };
-    return DDB.<FMI>(params).promise();
+    return DDB. < FMI > (params).promise();
 }
 
 
-(async function createAllTables(){
+(async function createAllTables() {
     console.time("HowFastWasThat");
     console.log(await Promise.all([
         createTheDragonStatsTable(),

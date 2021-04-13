@@ -21,24 +21,25 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-2"
     });
-function pushToDragonStatsOne(){
-    var 
+
+function pushToDragonStatsOne() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {},
         location_str = "";
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_one.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_one.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
-        location_str =  DRAGON_DATA_ARR[i_int].location_country_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_state_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_city_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_neighborhood_str;
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
+        location_str = DRAGON_DATA_ARR[i_int].location_country_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_state_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_city_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_neighborhood_str;
         dragon = {
             PutRequest: {
                 Item: {
-                    pk : {
+                    pk: {
                         "S": UUID4()
                     },
                     damage: {
@@ -55,7 +56,7 @@ function pushToDragonStatsOne(){
                     },
                     location: {
                         "S": location_str
-                    }, 
+                    },
                     protection: {
                         "N": DRAGON_DATA_ARR[i_int].protection_int.toString()
                     },
@@ -71,24 +72,25 @@ function pushToDragonStatsOne(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonStatsTwo(){
-    var 
+
+function pushToDragonStatsTwo() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {},
         location_str = "";
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_two.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_two.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
-        location_str =  DRAGON_DATA_ARR[i_int].location_country_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_state_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_city_str + "#" +
-                        DRAGON_DATA_ARR[i_int].location_neighborhood_str;
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
+        location_str = DRAGON_DATA_ARR[i_int].location_country_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_state_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_city_str + "#" +
+            DRAGON_DATA_ARR[i_int].location_neighborhood_str;
         dragon = {
             PutRequest: {
                 Item: {
-                    pk : {
+                    pk: {
                         "S": UUID4()
                     },
                     damage: {
@@ -105,7 +107,7 @@ function pushToDragonStatsTwo(){
                     },
                     location: {
                         "S": location_str
-                    }, 
+                    },
                     protection: {
                         "N": DRAGON_DATA_ARR[i_int].protection_int.toString()
                     },
@@ -122,11 +124,11 @@ function pushToDragonStatsTwo(){
     return DDB.batchWriteItem(params).promise();
 }
 
-(async function seed(){
+(async function seed() {
     console.time("HowFastWasThat");
     console.log(await Promise.all([
-            pushToDragonStatsOne(),
-            pushToDragonStatsTwo()
+        pushToDragonStatsOne(),
+        pushToDragonStatsTwo()
     ]));
     console.timeEnd("HowFastWasThat");
 })();

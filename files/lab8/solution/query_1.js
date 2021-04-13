@@ -24,7 +24,8 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-2"
     });
-function stageOne(bonus_description_str, cb){
+
+function stageOne(bonus_description_str, cb) {
     var params = {
         TableName: "improved_single_dragon_table",
         IndexName: "bonus_description_index",
@@ -37,16 +38,17 @@ function stageOne(bonus_description_str, cb){
         ProjectionExpression: "pk"
     };
     DDB.query(params, function (err, data) {
-        if(err){
+        if (err) {
             return cb(err, null);
         }
         cb(null, data.Items);
     });
 }
-function _buildExpressionAttributes(dragon_id_arr){
-    var 
+
+function _buildExpressionAttributes(dragon_id_arr) {
+    var
         expression = {};
-    for(var i_int = 0; i_int < dragon_id_arr.length; i_int += 1){
+    for (var i_int = 0; i_int < dragon_id_arr.length; i_int += 1) {
         var eval_str = ":uuid_" + i_int;
         expression[eval_str] = {
             S: dragon_id_arr[i_int].pk.S
@@ -54,17 +56,19 @@ function _buildExpressionAttributes(dragon_id_arr){
     }
     return expression;
 }
-function _buildFilterExpression(dragon_id_arr){
+
+function _buildFilterExpression(dragon_id_arr) {
     var
         filter_str = "pk in (";
-    for(var i_int = 0; i_int < dragon_id_arr.length; i_int += 1){
+    for (var i_int = 0; i_int < dragon_id_arr.length; i_int += 1) {
         filter_str += ":uuid_" + i_int + ", ";
     }
     var return_me_str = filter_str.slice(0, -2) + ")";
     return return_me_str;
 }
-function stageTwo(dragon_id_arr, cb){
-    var 
+
+function stageTwo(dragon_id_arr, cb) {
+    var
         params = {
             TableName: "improved_single_dragon_table",
             IndexName: "dragon_stats_index",
@@ -73,24 +77,25 @@ function stageTwo(dragon_id_arr, cb){
             ProjectionExpression: "dragon_name"
         };
     DDB.scan(params, function (err, data) {
-        if(err){
+        if (err) {
             return cb(err, null);
         }
         cb(null, data.Items);
     });
 }
-if(process.argv[2] === "test"){
-    if(process.argv[3]){
+
+if (process.argv[2] === "test") {
+    if (process.argv[3]) {
         var bonus_description_str = process.argv[3];
-        stageOne(bonus_description_str, function(err, dragon_id_arr){
-            if(err){
+        stageOne(bonus_description_str, function (err, dragon_id_arr) {
+            if (err) {
                 throw err;
             }
-            if(dragon_id_arr.length === 0){
+            if (dragon_id_arr.length === 0) {
                 console.log(null, []);
-            }else{
-                stageTwo(dragon_id_arr, function(err, dragon_arr){
-                    if(err){
+            } else {
+                stageTwo(dragon_id_arr, function (err, dragon_arr) {
+                    if (err) {
                         throw err;
                     }
                     console.log(dragon_arr.length + " dragons found that " + process.argv[3]);

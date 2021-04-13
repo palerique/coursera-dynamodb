@@ -14,12 +14,12 @@
 * permissions and limitations under the License.
 */
 
-var 
+var
     AWSXRay = null,
     AWS = null;
 
 exports.handler = function (event, contexts, callback) {
-        AWSXRay = require("aws-xray-sdk-core"),
+    AWSXRay = require("aws-xray-sdk-core"),
         AWS = AWSXRay.captureAWS(require("aws-sdk"));
     if (event["dragon_name_str"] !== undefined && event["dragon_name_str"] !== "All") {
         justThisDragon(event["dragon_name_str"], callback);
@@ -28,7 +28,7 @@ exports.handler = function (event, contexts, callback) {
     }
 };
 
-if(AWSXRay === null){
+if (AWSXRay === null) {
     AWS = require("aws-sdk");
 }
 
@@ -45,60 +45,59 @@ function justThisDragon(dragon_name_str, cb) {
                     S: dragon_name_str
                 }
             },
-            <FMI>: "dragon_name = :dragon_name",
-            ExpressionAttributeNames: {
-                "<FMI>": "family"
-            },
-            ProjectionExpression: "dragon_name, <FMI>, protection, damage, description",
+    <FMI>: "dragon_name = :dragon_name",
+        ExpressionAttributeNames: {
+            "<FMI>": "family"
+        },
+        ProjectionExpression: "dragon_name, <FMI>, protection, damage, description",
             TableName: "dragon_stats"
-        };
-    DDB.<FMI>(params, function (err, data) {
-        if (err) {
-            cb(err);
-        } else if (data.Items) {
-            cb(null, data.Items);
-        } else {
-            cb(null, []);
-        }
-    });
-}
-function scanTable(cb) {
-    var
-        params = {
-            TableName: "dragon_stats",
-            ExpressionAttributeNames: {
-                "#family": "family"
-            },
-            ProjectionExpression: "dragon_name, #family, protection, damage, description"
-        };
-    let items = [];
-    DDB.scan(params, function scanUntilDone(err, data) {
-        if (err) {
-            cb(err);
-        } else if (data.LastEvaluatedKey) {
-            
-            items = items.concat(data.Items);
-            
-            params.ExclusiveStartKey = data.LastEvaluatedKey;
-            
-            DDB.scan(params, scanUntilDone);
-        } else {
-            items = items.concat(data.Items);
-            cb(null, items);
-        }
-    });
-}
+            };
+            DDB.<FMI>(params, function (err, data) {
+                if (err) {
+                cb(err);
+            } else if (data.Items) {
+                cb(null, data.Items);
+            } else {
+                cb(null, []);
+            }
+            });
+                }
+                function scanTable(cb) {
+                    var
+                    params = {
+                    TableName: "dragon_stats",
+                    ExpressionAttributeNames: {
+                    "#family": "family"
+                },
+                    ProjectionExpression: "dragon_name, #family, protection, damage, description"
+                };
+                    let items = [];
+                    DDB.scan(params, function scanUntilDone(err, data) {
+                    if (err) {
+                    cb(err);
+                } else if (data.LastEvaluatedKey) {
+
+                    items = items.concat(data.Items);
+
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+
+                    DDB.scan(params, scanUntilDone);
+                } else {
+                    items = items.concat(data.Items);
+                    cb(null, items);
+                }
+                });
+                }
 
 
-
-if(process.argv[2] === "test"){
-    if(process.argv[3] && process.argv[3] !== "All"){
-        console.log("Local test for a dragon called " + process.argv[3]);
-        justThisDragon(process.argv[3], console.log);
-    }else{
-        console.log("Local test for all dragons");
-        scanTable(console.log);
-    }
-}
+                if(process.argv[2] === "test"){
+                    if(process.argv[3] && process.argv[3] !== "All"){
+                    console.log("Local test for a dragon called " + process.argv[3]);
+                    justThisDragon(process.argv[3], console.log);
+                }else{
+                    console.log("Local test for all dragons");
+                    scanTable(console.log);
+                }
+                }
 
 

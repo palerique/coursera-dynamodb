@@ -1,4 +1,3 @@
-
 /*
 
     SOLUTION
@@ -32,7 +31,7 @@
 
 
 */
-var 
+var
     AWS = require("aws-sdk"),
     S3API = new AWS.S3({
         apiVersion: "2006-03-01",
@@ -42,7 +41,7 @@ var
     bucket_name_str = "er-101-2021-02-10-dragon-website";
 
 
-function uploadItemAsBinary(key_name_str, content_type_str, bin){
+function uploadItemAsBinary(key_name_str, content_type_str, bin) {
     var params = {
         Bucket: bucket_name_str,
         Key: key_name_str,
@@ -50,12 +49,12 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
         ContentType: content_type_str,
         CacheControl: "max-age=0"
     };
-    S3API.putObject(params, function(error, data){
+    S3API.putObject(params, function (error, data) {
         console.log(error, data);
     });
 }
 
-(function init(){
+(function init() {
     var config_bin = FS.readFileSync("website/config.js");
     uploadItemAsBinary("config.js", "application/javascript", config_bin);
 
@@ -73,7 +72,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var main_css_bin = FS.readFileSync("website/main.css");
     uploadItemAsBinary("main.css", "text/css", main_css_bin);
-        
+
     var main_js_bin = FS.readFileSync("website/main.js");
     uploadItemAsBinary("main.js", "application/javascript", main_js_bin);
 
@@ -139,7 +138,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var Dexler_bin = FS.readFileSync("website/images/Dexler.png");
     uploadItemAsBinary("Dexler.png", "image/png", Dexler_bin);
-    
+
     var Eislex_bin = FS.readFileSync("website/images/Eislex.png");
     uploadItemAsBinary("Eislex.png", "image/png", Eislex_bin);
 
@@ -178,7 +177,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var Longlu_bin = FS.readFileSync("website/images/Longlu.png");
     uploadItemAsBinary("Longlu.png", "image/png", Longlu_bin);
-    
+
     var Lucian_bin = FS.readFileSync("website/images/Lucian.png");
     uploadItemAsBinary("Lucian.png", "image/png", Lucian_bin);
 
@@ -199,7 +198,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var Omnitrek_bin = FS.readFileSync("website/images/Omnitrek.png");
     uploadItemAsBinary("Omnitrek.png", "image/png", Omnitrek_bin);
-    
+
     var Pradumo_bin = FS.readFileSync("website/images/Pradumo.png");
     uploadItemAsBinary("Pradumo.png", "image/png", Pradumo_bin);
 
@@ -229,7 +228,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var Shulmi_bin = FS.readFileSync("website/images/Shulmi.png");
     uploadItemAsBinary("Shulmi.png", "image/png", Shulmi_bin);
-    
+
     var Smolder_bin = FS.readFileSync("website/images/Smolder.png");
     uploadItemAsBinary("Smolder.png", "image/png", Smolder_bin);
 
@@ -241,7 +240,7 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
 
     var Sukola_bin = FS.readFileSync("website/images/Sukola.png");
     uploadItemAsBinary("Sukola.png", "image/png", Sukola_bin);
-    
+
     var Tagnaurak_bin = FS.readFileSync("website/images/Tagnaurak.png");
     uploadItemAsBinary("Tagnaurak.png", "image/png", Tagnaurak_bin);
 

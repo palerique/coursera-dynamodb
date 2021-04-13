@@ -37,6 +37,7 @@ function justThisDragon(dragon_name_str, cb) {
         }
     });
 }
+
 function scanTable(cb) {
     var
         params = {
@@ -51,11 +52,11 @@ function scanTable(cb) {
         if (err) {
             cb(err);
         } else if (data.LastEvaluatedKey) {
-            
+
             items = items.concat(data.Items);
-            
+
             params.ExclusiveStartKey = data.LastEvaluatedKey;
-            
+
             DDB.scan(params, scanUntilDone);
         } else {
             items = items.concat(data.Items);

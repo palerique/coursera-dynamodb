@@ -20,15 +20,16 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-2"
     });
-function pushToDragonStatsTableOne(){
-    var 
+
+function pushToDragonStatsTableOne() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_one.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_one.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -46,7 +47,7 @@ function pushToDragonStatsTableOne(){
                     },
                     location_city: {
                         "S": DRAGON_DATA_ARR[i_int].location_city_str
-                    }, 
+                    },
                     location_country: {
                         "S": DRAGON_DATA_ARR[i_int].location_country_str
                     },
@@ -71,15 +72,16 @@ function pushToDragonStatsTableOne(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonStatsTableTwo(){
-    var 
+
+function pushToDragonStatsTableTwo() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_stats_two.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_stats_two.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -97,7 +99,7 @@ function pushToDragonStatsTableTwo(){
                     },
                     location_city: {
                         "S": DRAGON_DATA_ARR[i_int].location_city_str
-                    }, 
+                    },
                     location_country: {
                         "S": DRAGON_DATA_ARR[i_int].location_country_str
                     },
@@ -113,7 +115,7 @@ function pushToDragonStatsTableTwo(){
                 }
             }
         };
-       
+
 
         dragon_formatted_arr.push(dragon);
     }
@@ -124,15 +126,16 @@ function pushToDragonStatsTableTwo(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonCurrentPowerTable(){
-    var 
+
+function pushToDragonCurrentPowerTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_current_power.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_current_power.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -160,15 +163,16 @@ function pushToDragonCurrentPowerTable(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonBonusAttackTable(){
-    var 
+
+function pushToDragonBonusAttackTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_bonus_attack.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_bonus_attack.json");
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -196,16 +200,17 @@ function pushToDragonBonusAttackTable(){
     };
     return DDB.batchWriteItem(params).promise();
 }
-function pushToDragonFamilyTable(){
-    var 
+
+function pushToDragonFamilyTable() {
+    var
         dragon = {},
         dragon_formatted_arr = [],
         params = {};
 
-    var DRAGON_DATA_ARR = require("/home/ec2-user/environment/lab3/resources/dragon_family.json");
+    var DRAGON_DATA_ARR = require("/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab3/resources/dragon_family.json");
 
 
-    for(var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1){
+    for (var i_int = 0; i_int < DRAGON_DATA_ARR.length; i_int += 1) {
         dragon = {
             PutRequest: {
                 Item: {
@@ -237,15 +242,15 @@ function pushToDragonFamilyTable(){
     return DDB.batchWriteItem(params).promise();
 }
 
-(async function seed(){
+(async function seed() {
     console.time("HowFastWasThat");
     //async 2x speed
     console.log(await Promise.all([
-            pushToDragonStatsTableOne(),
-            pushToDragonStatsTableTwo(),  
-            pushToDragonCurrentPowerTable(),
-            pushToDragonBonusAttackTable(),
-            pushToDragonFamilyTable()
-     ]));
+        pushToDragonStatsTableOne(),
+        pushToDragonStatsTableTwo(),
+        pushToDragonCurrentPowerTable(),
+        pushToDragonBonusAttackTable(),
+        pushToDragonFamilyTable()
+    ]));
     console.timeEnd("HowFastWasThat");
 })();

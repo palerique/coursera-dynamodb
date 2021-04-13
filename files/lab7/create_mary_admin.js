@@ -16,17 +16,17 @@
 var
     AWS = require("aws-sdk"),
     BCRYPT = require("bcrypt"),
-    UUID4 = require("uuid/v4"),                    
+    UUID4 = require("uuid/v4"),
     DDB = new AWS.DynamoDB({
         apiVersion: "2012-08-10",
         region: "<FMI>"
     });
 
-(function uploadMaryAsAdmin(){
+(function uploadMaryAsAdmin() {
     var
         admin = {
-            Item:{
-                "user_name":{
+            Item: {
+                "user_name": {
                     S: "mary001"
                 },
                 "first_name": {
@@ -36,16 +36,16 @@ var
                     S: "mary@dragoncardgame001.com"
                 },
                 "password": {
-                    S:  BCRYPT.hashSync("pears", 10)
+                    S: BCRYPT.hashSync("pears", 10)
                 },
                 "admin": {
                     BOOL: true
                 }
             },
-            <FMI>: "TOTAL",
-            TableName: "<FMI>"
-        };
-     DDB.<FMI>(admin, function(err, data){
-         console.log(err, data);
-     });
-})();
+    <FMI>: "TOTAL",
+        TableName: "<FMI>"
+            };
+            DDB.<FMI>(admin, function(err, data){
+                console.log(err, data);
+            });
+                })();

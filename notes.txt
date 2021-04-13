@@ -424,7 +424,7 @@ Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/fi
 Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property
 
 - UPLOAD SITE PARA O BUCKET DO S3
-pushd /home/ec2-user/environment/lab2/resources && node upload_website.js && popd
+pushd /Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab2/resources && node upload_website.js && popd
 Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/resources/upload_website.js
 
 - SCAN TABLE
@@ -433,7 +433,7 @@ Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/fi
 Doc: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
 
 - UPLOAD CONFIG PARA O BUCKET DO S3
-pushd /home/ec2-user/environment/lab2/resources && node upload_config.js && popd
+pushd /Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab2/resources && node upload_config.js && popd
 Link do script: https://github.com/brunosantanati/coursera-dynamodb/blob/main/files/lab2/resources/upload_config.js
 
 EXERCISE 3

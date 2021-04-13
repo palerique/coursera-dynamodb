@@ -25,8 +25,8 @@ var
     });
 
 
-function stageOne(location_str, cb){
-    var 
+function stageOne(location_str, cb) {
+    var
         params = {
             TableName: "improved_single_dragon_table",
             IndexName: "location_index",
@@ -41,25 +41,25 @@ function stageOne(location_str, cb){
             ExpressionAttributeNames: {
                 "#location": "location"
             },
-            KeyConditionExpression :"sk = :stats and begins_with(#location, :location)"
+            KeyConditionExpression: "sk = :stats and begins_with(#location, :location)"
         };
     DDB.query(params, function (err, data) {
-        if(err){
+        if (err) {
             return cb(err, null);
         }
         cb(null, data.Items);
     });
 }
 
-if(process.argv[2] === "test"){
+if (process.argv[2] === "test") {
     var location_str = process.argv[3];
-    stageOne(location_str, function(err, dragon_arr){
-        if(err){
+    stageOne(location_str, function (err, dragon_arr) {
+        if (err) {
             console.log(err, null);
         }
-        if(dragon_arr.length === 0){
+        if (dragon_arr.length === 0) {
             console.log(null, []); //no dragons found
-        }else{
+        } else {
             console.log(null, dragon_arr);
         }
     });

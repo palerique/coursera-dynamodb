@@ -23,39 +23,40 @@ var
         apiVersion: "2012-08-10",
         region: "us-east-1"
     });
-function stageOne(family_str, cb){
+
+function stageOne(family_str, cb) {
     var params = {
         TableName: "improved_single_dragon_table",
         IndexName: "<FMI>",
         ExpressionAttributeValues: {
             ":family": {
                 S: <FMI>
-            }
-        },
-        ExpressionAttributeNames: {
-            "#family": "family"
-        },
-        FilterExpression: "#family = :family",
-        ProjectionExpression: "dragon_name"
-    };
-    
-    DDB.scan(params, function (err, data){
-        if(err){
-            return <FMI>(err, null);
-        }
-        cb(null, data.Items);
-    });
-}
+                    }
+                    },
+                    ExpressionAttributeNames: {
+                    "#family": "family"
+                },
+                    FilterExpression: "#family = :family",
+                    ProjectionExpression: "dragon_name"
+                    };
 
-if(process.argv[2] === "test"){
-    if(process.argv[3]){
-        var family_str = <FMI>[3];
-        stageOne(family_str, function(err, dragon_id_arr){
-            if(err){
-                throw err;
-            }
-            console.log(null, dragon_id_arr);
-        });
-    }
-}
+                    DDB.scan(params, function (err, data){
+                    if(err){
+                    return <FMI>(err, null);
+                }
+                    cb(null, data.Items);
+                });
+                    }
+
+                    if(process.argv[2] === "test"){
+                    if(process.argv[3]){
+                    var family_str = <FMI>[3];
+                    stageOne(family_str, function(err, dragon_id_arr){
+                    if(err){
+                    throw err;
+                }
+                    console.log(null, dragon_id_arr);
+                });
+                    }
+                    }
 

@@ -26,7 +26,7 @@
 * permissions and limitations under the License.
 
 */
-var 
+var
     AWS = require("aws-sdk"),
     S3API = new AWS.S3({
         apiVersion: "2006-03-01",
@@ -36,7 +36,7 @@ var
     bucket_name_str = "er-101-2021-02-10-dragon-website";
 
 
-function uploadItemAsBinary(key_name_str, content_type_str, bin){
+function uploadItemAsBinary(key_name_str, content_type_str, bin) {
     var params = {
         Bucket: bucket_name_str,
         Key: key_name_str,
@@ -44,15 +44,15 @@ function uploadItemAsBinary(key_name_str, content_type_str, bin){
         ContentType: content_type_str,
         CacheControl: "max-age=0"
     };
-    S3API.putObject(params, function(error, data){
+    S3API.putObject(params, function (error, data) {
         console.log(error, data);
     });
 }
 
 
-(function init(){
-    var 
-        file_path_str = "/home/ec2-user/environment/lab2/resources/website/",
+(function init() {
+    var
+        file_path_str = "/Users/ph/area-de-trabalho/POCs/dynamodb-poc/lab2/resources/website/",
         file_name_str = "config.js",
         config_bin = FS.readFileSync(file_path_str + file_name_str);
     uploadItemAsBinary(file_name_str, "text/javascript", config_bin);

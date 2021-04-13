@@ -11,22 +11,24 @@ var DRAGON_STATS_ARR = [],
     DRAGON_FAMILY_ARR = [],
     DRAGON_BONUS_ARR = [];
 
-function getStats(){
-    var 
+function getStats() {
+    var
         params = {
             TableName: "dragon_stats"
         };
     return DDB.scan(params).promise();
 }
-function getFamily(){
-    var 
+
+function getFamily() {
+    var
         params = {
             TableName: "dragon_family"
         };
     return DDB.scan(params).promise();
 }
-function getBonus(){
-    var 
+
+function getBonus() {
+    var
         params = {
             TableName: "dragon_bonus_attack"
         };
@@ -34,17 +36,17 @@ function getBonus(){
 }
 
 async function build() {
-    for(var i_int = 0; i_int < DRAGON_STATS_ARR.length; i_int += 1){
-        var 
+    for (var i_int = 0; i_int < DRAGON_STATS_ARR.length; i_int += 1) {
+        var
             dragon_uuid_str = UUID4(),
             dragon_stats = DRAGON_STATS_ARR[i_int],
-            location_str =  dragon_stats.location_country.S + "#" + 
-                            dragon_stats.location_state.S + "#" + 
-                            dragon_stats.location_city.S + "#" + 
-                            dragon_stats.location_neighborhood.S,
+            location_str = dragon_stats.location_country.S + "#" +
+                dragon_stats.location_state.S + "#" +
+                dragon_stats.location_city.S + "#" +
+                dragon_stats.location_neighborhood.S,
             dragon_family = {},
             dragon_bonus = {};
-        
+
         dragon_stats.sk = {
             S: "stats"
         };
@@ -59,8 +61,8 @@ async function build() {
         delete dragon_stats.location_state;
         delete dragon_stats.location_neighborhood;
         delete dragon_stats.location_city;
-        for(var j_int = 0; j_int < DRAGON_FAMILY_ARR.length; j_int += 1){
-            if(DRAGON_FAMILY_ARR[j_int].family.S === dragon_stats.family.S){
+        for (var j_int = 0; j_int < DRAGON_FAMILY_ARR.length; j_int += 1) {
+            if (DRAGON_FAMILY_ARR[j_int].family.S === dragon_stats.family.S) {
                 dragon_family.pk = {
                     S: dragon_uuid_str
                 };
@@ -74,8 +76,8 @@ async function build() {
                 break;
             }
         }
-        for(var k_int = 0; k_int < DRAGON_BONUS_ARR.length; k_int += 1){
-            if(DRAGON_BONUS_ARR[k_int].breath_attack.S === dragon_family.breath_attack.S){
+        for (var k_int = 0; k_int < DRAGON_BONUS_ARR.length; k_int += 1) {
+            if (DRAGON_BONUS_ARR[k_int].breath_attack.S === dragon_family.breath_attack.S) {
                 dragon_bonus.pk = {
                     S: dragon_uuid_str
                 };
@@ -91,20 +93,21 @@ async function build() {
         await runTransaction(dragon_stats, dragon_family, dragon_bonus);
     }
 }
-function runTransaction(dragon_stats, dragon_family, dragon_bonus){
-    var 
+
+function runTransaction(dragon_stats, dragon_family, dragon_bonus) {
+    var
         params = {
             TransactItems: [{
                 Put: {
                     Item: dragon_stats,
                     TableName: "improved_single_dragon_table"
                 }
-            },{
+            }, {
                 Put: {
                     Item: dragon_family,
                     TableName: "improved_single_dragon_table"
                 }
-            },{
+            }, {
                 Put: {
                     Item: dragon_bonus,
                     TableName: "improved_single_dragon_table"
@@ -113,7 +116,8 @@ function runTransaction(dragon_stats, dragon_family, dragon_bonus){
         };
     return DDB.transactWriteItems(params).promise();
 }
-(async function seed(){
+
+(async function seed() {
     var stats_response = await getStats();
     DRAGON_STATS_ARR = stats_response.Items;
     var family_response = await getFamily();
